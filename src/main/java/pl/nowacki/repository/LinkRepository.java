@@ -6,6 +6,5 @@ import pl.nowacki.domain.Link;
 
 public interface LinkRepository extends JpaRepository<Link, Long> {
 		
-	Link findByTitle(String title);
 	
 }
