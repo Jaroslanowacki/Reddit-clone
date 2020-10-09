@@ -19,7 +19,7 @@ public class SpringitApplication {
 		SpringApplication.run(SpringitApplication.class, args);
 	}
 	
-	@Bean
+	/**@Bean
 	CommandLineRunner runner(LinkRepository linkRepository,CommentRepository commentRepository) {
 		return args->{
 			Link link = new Link("Strona wp", "https://www.wp.pl/");
@@ -33,5 +33,8 @@ public class SpringitApplication {
 			
 		};
 	}
+*/
+
 
 }
+
