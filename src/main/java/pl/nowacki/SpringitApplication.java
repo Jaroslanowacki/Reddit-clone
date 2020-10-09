@@ -30,8 +30,7 @@ public class SpringitApplication {
 			commentRepository.save(comment);
 			link.addComment(comment);
 			
-			Link firstLink = linkRepository.findByTitle("Strona wp");
-			System.out.println(firstLink.getTitle());
+			
 		};
 	}
 
