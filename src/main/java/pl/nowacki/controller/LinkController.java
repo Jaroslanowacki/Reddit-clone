@@ -71,7 +71,7 @@ public class LinkController {
 	    	   return "redirect:/link/{id}";				
 	       }
 	    	
-	    	
+	    	 
 	    }
 	
 	 
