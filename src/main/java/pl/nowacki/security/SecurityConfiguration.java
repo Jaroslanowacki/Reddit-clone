@@ -16,7 +16,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService) {
 	        this.userDetailsService = userDetailsService;
 	    }
-	
+	 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
