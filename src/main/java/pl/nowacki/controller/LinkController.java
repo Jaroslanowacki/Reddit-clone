@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pl.nowacki.domain.Comment;
 import pl.nowacki.domain.Link;
+import pl.nowacki.repository.CommentRepository;
 import pl.nowacki.repository.LinkRepository;
 
 @Controller
@@ -26,10 +28,14 @@ public class LinkController {
 
 
 	 private LinkRepository linkRepository;
+	 private CommentRepository commentRepository;
 	 
 	 
-	public LinkController(LinkRepository linkRepository) {
+	
+
+	public LinkController(LinkRepository linkRepository, CommentRepository commentRepository) {
 		this.linkRepository = linkRepository;
+		this.commentRepository = commentRepository;
 	}
 
 	@GetMapping("/")
@@ -42,7 +48,12 @@ public class LinkController {
 	    public String read(@PathVariable Long id, Model model) {
 		 Optional<Link> link = linkRepository.findById(id);
 		 if( link.isPresent() ) {
-	            model.addAttribute("link",link.get());
+			 Link currentLink = link.get();
+			 Comment comment = new Comment();
+			 comment.setLink(currentLink);
+			 
+			 	model.addAttribute("comment", comment);
+	            model.addAttribute("link",currentLink);
 	            model.addAttribute("success", model.containsAttribute("success"));
 	            return "link/view";
 	        } else {
@@ -72,6 +83,17 @@ public class LinkController {
 	       }
 	    	
 	    	 
+	    }
+	    
+	    @PostMapping("/link/comments")
+	    public String addComment(@Valid Comment comment, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	        if( bindingResult.hasErrors() ) {
+	            logger.info("Something went wrong.");
+	        } else {
+	            logger.info("New Comment Saved!");
+	            commentRepository.save(comment);
+	        }
+	        return "redirect:/link/" + comment.getLink().getId();
 	    }
 	
 	 

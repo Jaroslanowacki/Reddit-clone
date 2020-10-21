@@ -28,7 +28,6 @@ import pl.nowacki.service.BeanUtil;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter @Setter
-@ToString
 public class Link extends Auditable {
 	
 	@Id
