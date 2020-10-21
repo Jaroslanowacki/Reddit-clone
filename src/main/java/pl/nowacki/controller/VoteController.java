@@ -9,36 +9,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.nowacki.domain.Link;
 import pl.nowacki.domain.Vote;
-import pl.nowacki.repository.LinkRepository;
-import pl.nowacki.repository.VoteRepository;
+import pl.nowacki.service.LinkService;
+import pl.nowacki.service.VoteService;
 
 @RestController
 public class VoteController {
-	
-	  	private VoteRepository voteRepository;
-	    private LinkRepository linkRepository;
 
-	    public VoteController(VoteRepository voteRepository, LinkRepository linkRepository) {
-	        this.voteRepository = voteRepository;
-	        this.linkRepository = linkRepository;
-	    }
+    private VoteService voteService;
+    private LinkService linkService;
 
-	    @Secured({"ROLE_USER"})
-	    @GetMapping("/vote/link/{linkID}/direction/{direction}/votecount/{voteCount}")
-	    public int vote(@PathVariable Long linkID, @PathVariable short direction, @PathVariable int voteCount) {
-	        Optional<Link> optionalLink = linkRepository.findById(linkID);
-	        if( optionalLink.isPresent() ) {
-	            Link link = optionalLink.get();
-	            Vote vote = new Vote(direction,link);
-	            voteRepository.save(vote);
+    public VoteController(VoteService voteService, LinkService linkService) {
+        this.voteService = voteService;
+        this.linkService = linkService;
+    }
 
-	            int updatedVoteCount = voteCount + direction;
-	            link.setVoteCount(updatedVoteCount);
-	            linkRepository.save(link);
-	            return updatedVoteCount;
-	        }
+    @Secured({"ROLE_USER"})
+    @GetMapping("/vote/link/{linkID}/direction/{direction}/votecount/{voteCount}")
+    public int vote(@PathVariable Long linkID, @PathVariable short direction, @PathVariable int voteCount) {
+        Optional<Link> optionalLink = linkService.findById(linkID);
+        if( optionalLink.isPresent() ) {
+            Link link = optionalLink.get();
+            Vote vote = new Vote(direction, link);
+            voteService.save(vote);
 
-	        return voteCount;
-	    }
-	}
+            int updatedVoteCount = voteCount + direction;
+            link.setVoteCount(updatedVoteCount);
+            linkService.save(link);
+            return updatedVoteCount;
+        }
+        return voteCount;
+    }
+}
 
