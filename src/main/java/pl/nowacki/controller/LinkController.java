@@ -23,7 +23,7 @@ import pl.nowacki.service.LinkService;
 @Controller
 public class LinkController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
 
     private LinkService linkService;
     private CommentService commentService;
