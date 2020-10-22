@@ -36,7 +36,12 @@ import lombok.ToString;
 @ToString
 public class User implements UserDetails {
 
-    @Id @GeneratedValue
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id @GeneratedValue
     private Long id;
 
     @NonNull
